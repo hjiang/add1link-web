@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Link extends Component {
@@ -9,11 +9,11 @@ class Link extends Component {
           {this.props.link.title} ({this.props.link.url})
         </div>
       </div>
-    )
+    );
   }
 }
 
 Link.propTypes = {
   link: PropTypes.object.isRequired
 };
-export default Link
+export default Link;

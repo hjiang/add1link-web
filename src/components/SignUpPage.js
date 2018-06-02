@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { gotoUrl } from '../actions/miscActions';
 import { saveAuthInfo } from '../actions/authActions';
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 class SignUpPage extends React.Component {
   state = {
@@ -85,7 +85,7 @@ const SIGNUP_MUTATION = gql`
       }
     }
   }
-`
+`;
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   graphql(SIGNUP_MUTATION, { name: 'signUpMutation' })(SignUpPage));

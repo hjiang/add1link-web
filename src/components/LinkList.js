@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import Link from './Link'
+import React, { Component } from 'react';
+import Link from './Link';
 
 class LinkList extends Component {
   render() {
@@ -14,12 +14,12 @@ class LinkList extends Component {
         title: 'The best GraphQL client',
         url: 'https://www.apollographql.com/docs/react/',
       },
-    ]
+    ];
 
     return (
       <div>{linksToRender.map(link => <Link key={link.id} link={link} />)}</div>
-    )
+    );
   }
 }
 
-export default LinkList
+export default LinkList;

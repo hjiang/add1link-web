@@ -7,10 +7,10 @@ import initialState from './initialState';
 export default function authReducer(state = initialState.auth,
   action) {
   switch (action.type) {
-    case SAVE_AUTH_INFO:
-      return saveAuthInfo(state, action);
-    default:
-      return state;
+  case SAVE_AUTH_INFO:
+    return saveAuthInfo(state, action);
+  default:
+    return state;
   }
 }
 

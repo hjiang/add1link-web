@@ -1,5 +1,5 @@
 import React from 'react';
-import LinkList from './LinkList'
+import LinkList from './LinkList';
 
 const HomePage = () => {
   return (
