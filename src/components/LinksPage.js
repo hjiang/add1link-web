@@ -1,10 +1,10 @@
 import React from 'react';
 import LinkList from './LinkList';
 
-const HomePage = () => {
+const LinksPage = () => {
   return (
     <LinkList />
   );
 };
 
-export default HomePage;
+export default LinksPage;

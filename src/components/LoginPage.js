@@ -9,7 +9,7 @@ import { saveAuthInfo } from '../actions/authActions';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-class SignUpPage extends React.Component {
+class LoginPage extends React.Component {
   state = {
     requestInFlight: false,
     errorReason: null
@@ -25,12 +25,13 @@ class SignUpPage extends React.Component {
     this.setState({ requestInFlight: true });
     const { email, password } = this.state;
 
-    this.props.signUpMutation({
+    this.props.loginMutation({
       variables: { email, password }
     }).then(result => {
-      const { token, user } = result.data.signUp;
+      const { token, user } = result.data.login;
       this.props.actions.saveAuthInfo(user, token);
       this.setState({ requestInFlight: false });
+      // TODO: check the redirect URL param.
       this.props.actions.gotoUrl('/links');
     }).catch(err => {
       this.setState({
@@ -61,9 +62,9 @@ class SignUpPage extends React.Component {
   }
 }
 
-SignUpPage.propTypes = {
+LoginPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  signUpMutation: PropTypes.func.isRequired
+  loginMutation: PropTypes.func.isRequired
 };
 
 function mapStateToProps() {
@@ -76,9 +77,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const SIGNUP_MUTATION = gql`
-  mutation SignUpMutation($email: String!, $password: String!) {
-    signUp(email: $email, password: $password) {
+const LOGIN_MUTATION = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       token
       user {
         email
@@ -88,4 +89,4 @@ const SIGNUP_MUTATION = gql`
 `;
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  graphql(SIGNUP_MUTATION, { name: 'signUpMutation' })(SignUpPage));
+  graphql(LOGIN_MUTATION, { name: 'loginMutation' })(LoginPage));
