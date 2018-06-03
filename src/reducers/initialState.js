@@ -1,6 +1,10 @@
-export default  {
+import {loadFromLocalStorage} from '../utils/localStorage';
+
+const { email, token } = loadFromLocalStorage(['email', 'token']);
+
+export default {
   auth: {
-    user: null,
-    token: null
+    user: email ? { email } : null,
+    token: token
   }
 };
