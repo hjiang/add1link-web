@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import { Feed } from 'semantic-ui-react';
 import Link from './Link';
+import ReactHoverObserver from 'react-hover-observer';
 
 class LinkList extends Component {
   render() {
@@ -16,7 +17,10 @@ class LinkList extends Component {
 
     let linksToRender = this.props.newLinks.concat(this.props.feedQuery.feed.links);
     return (
-      <Feed>{linksToRender.map(link => <Link key={link.id} link={link} />)}</Feed>
+      <Feed>{linksToRender.map(link =>
+        <ReactHoverObserver key={link.id}>
+          <Link link={link} />
+        </ReactHoverObserver>)}</Feed>
     );
   }
 }
