@@ -16,6 +16,7 @@ import NotFoundPage from './NotFoundPage';
 import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
 import HeaderNav from './HeaderNav';
+import LandingPage from './LandingPage';
 
 const userIsAuthenticated = connectedRouterRedirect({
   // The url to redirect user to if they fail
@@ -56,13 +57,18 @@ class App extends React.Component {
       <ApolloProvider client={this.apolloClient}>
         <Container style={{ width: '100%', margin: 0 }}>
           <HeaderNav />
-          <Container style={{ width: '100%', margin: 0 }}>
+          <Container style={{ width: '100%', margin: 0, minHeight: '25em' }}>
             <Switch>
-              <Route exact path="/links" component={userIsAuthenticated(LinksPage)} />
+              <Route exact path='/' component={LandingPage} />
+              <Route path="/links" component={userIsAuthenticated(LinksPage)} />
               <Route path="/sign-up" component={SignUpPage} />
               <Route path="/login" component={LoginPage} />
               <Route component={NotFoundPage} />
             </Switch>
+          </Container>
+          <Container text style={{ marginTop: '5em', textAlign: 'center' }}>
+            <p>Copied with ❤️ from StackOverflow.</p>
+            <p>Hosted on <a href="https://leancloud.cn">LeanCloud</a>.</p>
           </Container>
         </Container>
       </ApolloProvider>
