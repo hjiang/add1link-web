@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { Feed, Container } from 'semantic-ui-react';
+import { Feed } from 'semantic-ui-react';
 import Link from './Link';
 
 class LinkList extends Component {
@@ -16,9 +16,7 @@ class LinkList extends Component {
 
     const linksToRender = this.props.feedQuery.feed.links;
     return (
-      <Container text>
-        <Feed>{linksToRender.map(link => <Link key={link.id} link={link} />)}</Feed>
-      </Container>
+      <Feed>{linksToRender.map(link => <Link key={link.id} link={link} />)}</Feed>
     );
   }
 }
