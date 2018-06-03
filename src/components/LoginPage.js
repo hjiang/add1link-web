@@ -48,7 +48,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <Container style={{ marginTop: '5em', paddingLeft: '2em', paddingRight: '2em' }}>
-        <Header as="h1">Sign Up</Header>
+        <Header as="h1">Login</Header>
         <Form onSubmit={this.handleSubmit} error={!!this.state.errorReason}>
           <Form.Input label="Email" name="email" onChange={this.handleChange} />
           <Form.Input label="Password" name="password" type="password"
