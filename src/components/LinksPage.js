@@ -5,16 +5,23 @@ import LinkList from './LinkList';
 import LinkListActionTab from './LinkListActionTab';
 
 class LinksPage extends Component {
+  state = {
+    newLinks: []
+  }
 
-  afterAddLink = () => {
-    // FIXME
+  afterAddLink = link => {
+    this.setState(prevState => {
+      const preNewLinks = prevState.newLinks;
+      const newLinks = [link, ...preNewLinks];
+      return { ...prevState, newLinks };
+    });
   }
 
   render = () => {
     return (
       <Container text style={{ paddingTop: '1em' }} >
         <LinkListActionTab afterAddLink={this.afterAddLink} />
-        <LinkList />
+        <LinkList newLinks={this.state.newLinks}/>
       </Container>
     );
   }

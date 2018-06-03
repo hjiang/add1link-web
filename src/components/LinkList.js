@@ -14,7 +14,7 @@ class LinkList extends Component {
       return <div>{this.props.feedQuery.error}</div>;
     }
 
-    const linksToRender = this.props.feedQuery.feed.links;
+    let linksToRender = this.props.newLinks.concat(this.props.feedQuery.feed.links);
     return (
       <Feed>{linksToRender.map(link => <Link key={link.id} link={link} />)}</Feed>
     );
@@ -22,7 +22,8 @@ class LinkList extends Component {
 }
 
 LinkList.propTypes = {
-  feedQuery: PropTypes.object.isRequired
+  feedQuery: PropTypes.object.isRequired,
+  newLinks: PropTypes.array.isRequired
 };
 
 const FEED_QUERY = gql`
