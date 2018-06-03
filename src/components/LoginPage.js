@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
           {this.state.errorReason && <Message error content={this.state.errorReason} />}
           <Form.Button primary loading={this.state.requestInFlight} type="submit">Submit</Form.Button>
         </Form>
-        <p>Already have an account? <Link to="sign-in">Sign in</Link>.</p>
+        <p>Need an account? <Link to="/sign-up">Sign up</Link>.</p>
       </Container>
     );
   }
