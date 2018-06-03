@@ -1,9 +1,9 @@
 /* eslint-disable import/no-named-as-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, NavLink, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
 import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
@@ -15,6 +15,7 @@ import LinksPage from './LinksPage';
 import NotFoundPage from './NotFoundPage';
 import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
+import HeaderNav from './HeaderNav';
 
 const userIsAuthenticated = connectedRouterRedirect({
   // The url to redirect user to if they fail
@@ -51,13 +52,10 @@ class App extends React.Component {
 
 
   render() {
-    const activeStyle = { color: 'blue' };
     return (
       <ApolloProvider client={this.apolloClient}>
         <Container style={{ width: '100%', margin: 0 }}>
-          <Menu stackable fluid style={{ width: '100%', margin: 0 }}>
-            <Menu.Item><NavLink exact to="/" activeStyle={activeStyle}>+1 link</NavLink></Menu.Item>
-          </Menu>
+          <HeaderNav />
           <Container style={{ width: '100%', margin: 0 }}>
             <Switch>
               <Route exact path="/links" component={userIsAuthenticated(LinksPage)} />
