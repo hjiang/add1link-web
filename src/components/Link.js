@@ -28,16 +28,26 @@ class Link extends Component {
     const domain = url.hostname;
     const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
     let textStyle = this.state.deleted ? { textDecoration: 'line-through' } : {};
+    let date = new Date(this.props.link.createdAt);
     return (
       <Feed.Event>
+        <Feed.Label style={{ width: 'auto', position: 'relative' }}>
+          <img style={{
+            position: 'absolute', top: '50%', left: '50%', height: '16px',
+            width: '16px', margin: '-8px 0 0 -8px', padding: '0'
+          }} src={faviconUrl} />
+        </Feed.Label>
         <Feed.Content>
+
           <Feed.Summary>
-            <img style={{ width: 'auto', height: 'auto', marginRight: '0.5em' }} src={faviconUrl} /><a href={this.props.link.url} style={textStyle}>{this.props.link.title}</a>
-            {this.props.isHovering && !this.state.deleted && <Icon name='trash' size='small' onClick={this.onDelete} />}
-            <Feed.Meta>
-              {this.state.errorReason && <Message error content={this.state.errorReason} />}
-            </Feed.Meta>
+            <a href={this.props.link.url} style={textStyle}>{this.props.link.title}</a>
+
           </Feed.Summary>
+          <Feed.Meta>
+            <Feed.Date style={{ display: 'inline' }}>{date.toLocaleDateString()}</Feed.Date>
+            {!this.state.deleted && <Icon name='trash' onClick={this.onDelete} style={{ display: 'inline' }} />}
+            {this.state.errorReason && <Message error content={this.state.errorReason} />}
+          </Feed.Meta>
         </Feed.Content>
       </Feed.Event>
     );
