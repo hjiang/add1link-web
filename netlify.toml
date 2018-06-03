@@ -4,7 +4,7 @@ command = "yarn build"
 
 [[redirects]]
   from = "/graphql/*"
-  to = "https://links-api.avosapps.us/:splat"
+  to = "https://links-api.avosapps.us/graphql/:splat"
   status = 200
   force = true
 
