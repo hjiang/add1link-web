@@ -57,7 +57,7 @@ class App extends React.Component {
       <ApolloProvider client={this.apolloClient}>
         <Container style={{ width: '100%', margin: 0 }}>
           <HeaderNav />
-          <Container style={{ width: '100%', margin: 0, minHeight: '25em' }}>
+          <Container style={{ width: '100%', margin: 0, minHeight: '20em' }}>
             <Switch>
               <Route exact path='/' component={LandingPage} />
               <Route path="/links" component={userIsAuthenticated(LinksPage)} />
