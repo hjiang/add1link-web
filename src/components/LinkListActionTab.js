@@ -31,9 +31,9 @@ class LinkListActionTab extends Component {
     this.props.saveLinkMutation({
       variables: { url: input }
     }).then(result => {
-      const { url, title, id } = result.data.saveLink;
-      this.setState({ requestInFlight: false, userInput: '' });
-      this.props.afterAddLink({ url, title, id });
+      const { url, title, id, createdAt } = result.data.saveLink;
+      this.setState({ requestInFlight: false, userInput: '', errorReason: null });
+      this.props.afterAddLink({ url, title, id, createdAt });
     }).catch(err => {
       this.setState({
         requestInFlight: false,
@@ -81,6 +81,7 @@ const SAVE_LINK_MUTATION = gql`
       id
       title
       url
+      createdAt
     }
   }
 `;
