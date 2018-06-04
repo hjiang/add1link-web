@@ -1,34 +1,13 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { Feed } from 'semantic-ui-react';
+import { Feed, Button, Container, Message } from 'semantic-ui-react';
 import Link from './Link';
 
-class LinkList extends Component {
-  render() {
-    if (this.props.feedQuery && this.props.feedQuery.loading) {
-      return <div>Loading</div>;
-    }
-    if (this.props.feedQuery && this.props.feedQuery.error) {
-      return <div>{this.props.feedQuery.error}</div>;
-    }
-
-    let linksToRender = this.props.newLinks.concat(this.props.feedQuery.feed.links);
-    return (
-      <Feed>{linksToRender.map(link => <Link link={link} key={link.id} />)}</Feed>
-    );
-  }
-}
-
-LinkList.propTypes = {
-  feedQuery: PropTypes.object.isRequired,
-  newLinks: PropTypes.array.isRequired
-};
-
 const FEED_QUERY = gql`
-  query FeedQuery {
-    feed {
+  query FeedQuery($beforeTimestamp: String, $limit: Int) {
+    feed(beforeTimestamp: $beforeTimestamp, limit: $limit) {
       links {
         id
         url
@@ -40,4 +19,67 @@ const FEED_QUERY = gql`
   }
 `;
 
-export default graphql(FEED_QUERY, { name: 'feedQuery' })(LinkList);
+const LINKS_PER_PAGE = 10;
+
+class LinkList extends Component {
+  render() {
+    return (
+      <Query
+        query={FEED_QUERY}
+        variables={{ limit: LINKS_PER_PAGE }}
+        fetchPolicy='cache-and-network'>
+        {
+          ({ loading, data, error, fetchMore }) => {
+            if (!loading && data.feed && data.feed.links.length === 0 &&
+            this.props.newLinks.length === 0) {
+              return <Message content="🤔 You don't have any link. Add one above to start! ☝️" />;
+            }
+            return (
+              <Container>
+                <Feed>
+                  {this.props.newLinks.map(link => <Link link={link} key={link.id} />)}
+                  {data.feed && data.feed.links.map(link => <Link link={link} key={link.id} />)}
+                </Feed>
+                <Button
+                  attached='bottom'
+                  content={loading ? 'Loading ...' : 'Load more'}
+                  loading={loading}
+                  onClick={() => {
+                    fetchMore({
+                      variables: {
+                        limit: LINKS_PER_PAGE,
+                        beforeTimestamp: data.feed.nextTimestamp
+                      },
+                      updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+                        if (fetchMoreResult.feed.links.length === 0) {
+                          return prev;
+                        }
+                        return Object.assign({}, prev, {
+                          feed: Object.assign({}, prev.feed, {
+                            links: [
+                              ...prev.feed.links,
+                              ...fetchMoreResult.feed.links
+                            ],
+                            nextTimestamp: fetchMoreResult.feed.nextTimestamp
+                          })
+                        });
+                      }
+                    });
+                  }}
+                />
+                {error && <Message error content={error} />}
+              </Container>
+            );
+          }
+        }
+      </Query>
+    );
+  }
+}
+
+LinkList.propTypes = {
+  newLinks: PropTypes.array.isRequired
+};
+
+export default LinkList;
