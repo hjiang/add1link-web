@@ -67,8 +67,9 @@ class App extends React.Component {
             </Switch>
           </Container>
           <Container text style={{ marginTop: '5em', textAlign: 'center' }}>
-            <p>Copied with ❤️ from StackOverflow.</p>
-            <p>Hosted on <a href="https://leancloud.cn">LeanCloud</a>.</p>
+            <p>Copied with ❤️ from StackOverflow.
+            Hosted on <a href="https://leancloud.cn">LeanCloud</a>.</p>
+            <p>Browser extensions: <a href="https://chrome.google.com/webstore/detail/add-1-link-extension/npjhpkhnhdkcglekeailemkebeceigka" target="_blanck" rel="noopener noreferrer">Chrome</a></p>
           </Container>
         </Container>
       </ApolloProvider>
