@@ -16,7 +16,7 @@ class LandingPage extends Component {
       <Container text style={{textAlign: 'center'}}>
         <Header
           as='h1'
-          content='Add-1-link'
+          content='+1 link'
           style={{
             fontSize: '3em',
             fontWeight: 'normal',
