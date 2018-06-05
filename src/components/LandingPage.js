@@ -1,9 +1,17 @@
 import { Container, Header, Button, Icon } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { gotoUrl } from '../actions/miscActions';
+import { bindActionCreators } from 'redux';
 
 class LandingPage extends Component {
   render() {
+    if (this.props.auth.user) {
+      this.props.actions.gotoUrl('/links');
+      return <div>You are already logged in. Redirecting to links page...</div>;
+    }
     return (
       <Container text style={{textAlign: 'center'}}>
         <Header
@@ -36,4 +44,19 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+LandingPage.propTypes = {
+  auth: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+  return { auth: state.auth };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ gotoUrl }, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
