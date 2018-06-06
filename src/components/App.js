@@ -69,7 +69,7 @@ class App extends React.Component {
           <Container text style={{ marginTop: '5em', textAlign: 'center' }}>
             <p>Copied with ❤️ from StackOverflow.
             Hosted on <a href="https://leancloud.cn">LeanCloud</a>.</p>
-            <p>Browser extensions: <a href="https://chrome.google.com/webstore/detail/add-1-link-extension/npjhpkhnhdkcglekeailemkebeceigka" target="_blanck" rel="noopener noreferrer">Chrome</a></p>
+            <p>Browser extensions: <a href="https://chrome.google.com/webstore/detail/add-1-link-extension/npjhpkhnhdkcglekeailemkebeceigka" target="_blank" rel="noopener noreferrer">Chrome</a> | <a href="https://addons.mozilla.org/en-US/firefox/addon/1-link-extension/" target="_blank" rel="noopener noreferrer">Firefox</a></p>
           </Container>
         </Container>
       </ApolloProvider>
