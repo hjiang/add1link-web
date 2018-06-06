@@ -33,7 +33,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const httpLink = new HttpLink({ uri: 'https://links-api.avosapps.us/graphql/' });
+    const httpLink = new HttpLink({ uri: 'https://add1.link/graphql/' });
 
     const middlewareAuthLink = new ApolloLink((operation, forward) => {
       const token = this.props.auth.token;
