@@ -19,7 +19,7 @@ const FEED_QUERY = gql`
   }
 `;
 
-const LINKS_PER_PAGE = 10;
+const LINKS_PER_PAGE = 20;
 
 class LinkList extends Component {
   render() {
