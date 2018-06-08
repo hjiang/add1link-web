@@ -21,13 +21,15 @@ class LinkListActionTab extends Component {
   };
 
   handleSubmit = () => {
-    if (this.state.action === 'search') {
-      this.setState({ errorReason: 'Search is not implemented yet.' });
-      return;
-    }
-    this.setState({ requestInFlight: true });
     const input = this.state.userInput;
+    if (input.length === 0) return;
 
+    if (this.state.action === 'search') {
+      this.setState({ errorReason: null });
+      return this.props.onSearch(this.state.userInput);
+    }
+
+    this.setState({ requestInFlight: true });
     this.props.saveLinkMutation({
       variables: { url: input }
     }).then(result => {
@@ -48,6 +50,10 @@ class LinkListActionTab extends Component {
     }
   }
 
+  onDismissError = () => {
+    this.setState({ errorReason: null });
+  }
+
   render() {
     const options = [
       { key: 'add', text: 'Add', value: 'add' },
@@ -64,7 +70,8 @@ class LinkListActionTab extends Component {
           <input />
           <Button type='submit' onClick={this.handleSubmit}>Go</Button>
         </Input>
-        {this.state.errorReason && <Message error content={this.state.errorReason} />}
+        {this.state.errorReason && <Message error content={this.state.errorReason}
+          onDismiss={this.onDismissError} />}
       </Container>
     );
   }
@@ -72,7 +79,8 @@ class LinkListActionTab extends Component {
 
 LinkListActionTab.propTypes = {
   saveLinkMutation: PropTypes.func.isRequired,
-  afterAddLink: PropTypes.func.isRequired
+  afterAddLink: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired
 };
 
 const SAVE_LINK_MUTATION = gql`
