@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script src=https://cdn.ravenjs.com/3.24.0/raven.min.js crossorigin=anonymous></script>
+  <script>
+    Raven.config('https://b29c91b19e134402a6a4f7a48899fc94@sentry.io/1223086', {
+      release: '0-0-0',
+      environment: 'development-test',
+    }).install()
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28361803-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
