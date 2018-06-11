@@ -38,7 +38,12 @@ class SearchResults extends Component {
         {
           ({ loading, data, error, fetchMore }) => {
             if (!loading && data.search && data.search.links.length === 0) {
-              return <Message content="🤔 You don't have any link matching the query." />;
+              return (
+                <Container>
+                  <div>Search query: {this.props.queryString} <Icon name='cancel' onClick={this.onCancel} /></div>
+                  <Message content="🤔 You don't have any link matching the query." />
+                </Container>
+              );
             }
             return (
               <Container>
