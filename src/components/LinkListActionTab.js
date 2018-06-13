@@ -4,6 +4,9 @@ import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 
+// Naive way to check URL, but sufficient for our purpose.
+const isWebUrl = s => s.startsWith('http://') || s.startsWith('https://');
+
 class LinkListActionTab extends Component {
   state = {
     requestInFlight: false,
@@ -18,6 +21,13 @@ class LinkListActionTab extends Component {
 
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value });
+    if (name === 'userInput') {
+      if (isWebUrl(value) && this.state.action !== 'add') {
+        this.setState({ action: 'add' });
+      } else if (!isWebUrl(value) && this.state.action !== 'search') {
+        this.setState({action: 'search'});
+      }
+    }
   };
 
   handleSubmit = () => {
@@ -63,10 +73,10 @@ class LinkListActionTab extends Component {
       <Container>
         <Input type='text' loading={this.state.requestInFlight}
           name='userInput' onChange={this.handleChange} value={this.state.userInput}
-          onKeyPress={this.onKeyPress}
+          onKeyPress={this.onKeyPress} placeholder='URL to add or words to search.'
           action fluid>
-          <Select name='action' defaultValue='add' options={options} onChange={this.handleChange}
-            style={{ width: '8em', minWidth: '8em' }} />
+          <Select name='action' options={options} onChange={this.handleChange}
+            value={this.state.action} style={{ width: '6em', minWidth: '6em' }} />
           <input />
           <Button type='submit' onClick={this.handleSubmit}>Go</Button>
         </Input>
