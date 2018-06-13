@@ -27,7 +27,7 @@ class Link extends Component {
     const url = new URL(this.props.link.url);
     const domain = url.hostname;
     const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
-    let textStyle = this.state.deleted ? { textDecoration: 'line-through' } : {};
+    let textStyle = this.state.deleted ? { textDecoration: 'line-through', color: '#898da0' } : {};
     let date = new Date(this.props.link.createdAt);
     return (
       <Feed.Event>
