@@ -37,7 +37,7 @@ class SearchResults extends Component {
         fetchPolicy='cache-and-network'>
         {
           ({ loading, data, error, fetchMore }) => {
-            if (!loading && data.search && data.search.links.length === 0) {
+            if (!loading && data && data.search && data.search.links.length === 0) {
               return (
                 <Container>
                   <div>Search query: {this.props.queryString} <Icon name='cancel' onClick={this.onCancel} /></div>

@@ -30,7 +30,7 @@ class LinkList extends Component {
         fetchPolicy='cache-and-network'>
         {
           ({ loading, data, error, fetchMore }) => {
-            if (!loading && data.feed && data.feed.links.length === 0 &&
+            if (!loading && data && data.feed && data.feed.links.length === 0 &&
             this.props.newLinks.length === 0) {
               return <Message content="🤔 You don't have any link. Add one above to start! ☝️" />;
             }
