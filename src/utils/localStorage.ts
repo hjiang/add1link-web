@@ -1,13 +1,13 @@
-/* global window */
-export const saveToLocalStorage = (kvMap) => {
+type ssmap = { [keys: string]: string | null };
+export const saveToLocalStorage = (kvMap: ssmap) => {
   Object.entries(kvMap).forEach(([key, value]) => {
-    window.localStorage.setItem(key, value);
+    value && window.localStorage.setItem(key, value);
   });
 };
 
-export const loadFromLocalStorage = (keys) => {
-  let data = {};
-  keys.forEach(key => {
+export const loadFromLocalStorage = (keys: string[]): ssmap => {
+  let data: ssmap = {};
+  keys.forEach((key) => {
     data[key] = window.localStorage.getItem(key);
   });
   return data;
@@ -15,7 +15,7 @@ export const loadFromLocalStorage = (keys) => {
 
 export const loadUser = () => {
   const user = loadFromLocalStorage(['email', 'token']);
-  if (Object.values(user).filter(v => v).length == 2) {
+  if (Object.values(user).filter((v) => v).length == 2) {
     return user;
   } else {
     return null;
