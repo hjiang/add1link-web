@@ -10,10 +10,10 @@ import LoginPage from './LoginPage';
 import HeaderNav from './HeaderNav';
 import LandingPage from './LandingPage';
 import { protect } from './Protected';
-import { AuthContext, initialAuthState } from '../contexts';
+import { AuthContext, initialAuthState, saveAuthState } from '../contexts';
 
 const App: React.FC = () => {
-  const [authState] = useState(initialAuthState);
+  const [authState, setAuthState] = useState(initialAuthState);
   const client = new ApolloClient({
     uri: 'https://48p1r2roz4.sse.codesandbox.io',
     cache: new InMemoryCache(),
@@ -22,6 +22,10 @@ const App: React.FC = () => {
       authorization: authState.token
     }
   });
+  const onSignUp = (authState: AuthState): AuthState => {
+    setAuthState(authState);
+    return saveAuthState(authState);
+  };
   return (
     <AuthContext.Provider value={authState}>
       <ApolloProvider client={client}>
@@ -32,7 +36,10 @@ const App: React.FC = () => {
               <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route path="/links" component={protect(LinksPage)} />
-                <Route path="/sign-up" component={SignUpPage} />
+                <Route
+                  path="/sign-up"
+                  render={() => <SignUpPage onSignUp={onSignUp} />}
+                />
                 <Route path="/login" component={LoginPage} />
                 <Route component={NotFoundPage} />
               </Switch>
