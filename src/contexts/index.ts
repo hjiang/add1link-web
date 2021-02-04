@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   saveToLocalStorage,
-  loadFromLocalStorage
+  loadFromLocalStorage,
+  clearLocalStorage
 } from '../utils/localStorage';
 
 const { email, token } = loadFromLocalStorage(['email', 'token']);
@@ -20,5 +21,10 @@ export const saveAuthState = (authState: AuthState): AuthState => {
   saveToLocalStorage({ email: authState.user!.email, token: authState.token });
   return authState;
 };
+
+export const clearAuthState = (): AuthState => {
+  clearLocalStorage();
+  return {user: null, token: null};
+}
 
 export const AuthContext = React.createContext(initialAuthState);
