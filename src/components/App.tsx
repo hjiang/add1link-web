@@ -22,10 +22,11 @@ const App: React.FC = () => {
       authorization: authState.token
     }
   });
-  const onSignUp = (authState: AuthState): AuthState => {
+  const onLogin = (authState: AuthState): AuthState => {
     setAuthState(authState);
     return saveAuthState(authState);
   };
+  const onSignUp = onLogin;
   return (
     <AuthContext.Provider value={authState}>
       <ApolloProvider client={client}>
@@ -40,7 +41,10 @@ const App: React.FC = () => {
                   path="/sign-up"
                   render={() => <SignUpPage onSignUp={onSignUp} />}
                 />
-                <Route path="/login" component={LoginPage} />
+                <Route
+                  path="/login"
+                  render={() => <LoginPage onLogin={onLogin} />}
+                />
                 <Route component={NotFoundPage} />
               </Switch>
             </Container>
