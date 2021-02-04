@@ -31,7 +31,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp }) => {
   });
   handleSubmit = () => {
     signUp({ variables: { email, password } });
-    this.props.actions.gotoUrl('/links');
   };
 
   return (
@@ -39,7 +38,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp }) => {
       style={{ marginTop: '5em', paddingLeft: '2em', paddingRight: '2em' }}
     >
       <Header as="h1">Sign Up</Header>
-      <Form onSubmit={this.handleSubmit} error={!!error}>
+      <Form onSubmit={handleSubmit} error={!!error}>
         <Form.Input
           label="Email"
           name="email"
