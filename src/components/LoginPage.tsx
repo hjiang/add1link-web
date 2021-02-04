@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Message, Header } from 'semantic-ui-react';
-import { gql, useMutation } from '@graphql/client';
+import { gql, useMutation } from '@apollo/client';
 import { AuthState } from '../contexts';
 
 const LOGIN_MUTATION = gql`
