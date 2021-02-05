@@ -31,8 +31,8 @@ const LinkList: React.FC<LinkListsProps> = ({ newLinks }) => {
   );
   const [loadFeed, { loading, error }] = useQuery(FEED_QUERY, {
     onCompleted: (data) => {
-      setLinkRecords([...linkRecords, data.links]);
-      setNextTimestamp(data.nextTimestamp);
+      setLinkRecords([...linkRecords, data.feed.links]);
+      setNextTimestamp(data.feed.nextTimestamp);
     }
   });
   useEffect(() => {
