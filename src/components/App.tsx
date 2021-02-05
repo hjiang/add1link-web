@@ -10,7 +10,13 @@ import LoginPage from './LoginPage';
 import HeaderNav from './HeaderNav';
 import LandingPage from './LandingPage';
 import { protect } from './Protected';
-import { AuthContext, initialAuthState, saveAuthState, clearAuthState } from '../contexts';
+import {
+  AuthContext,
+  initialAuthState,
+  saveAuthState,
+  clearAuthState,
+  AuthState
+} from '../contexts';
 
 const App: React.FC = () => {
   const [authState, setAuthState] = useState(initialAuthState);
@@ -19,7 +25,7 @@ const App: React.FC = () => {
     cache: new InMemoryCache(),
     credentials: 'include',
     headers: {
-      authorization: authState.token
+      authorization: authState.token || ''
     }
   });
   const onLogin = (authState: AuthState): AuthState => {
@@ -29,7 +35,7 @@ const App: React.FC = () => {
   const onSignUp = onLogin;
   const onLogout = () => {
     setAuthState(clearAuthState);
-  }
+  };
   return (
     <AuthContext.Provider value={authState}>
       <ApolloProvider client={client}>

@@ -6,7 +6,7 @@ export const saveToLocalStorage = (kvMap: ssmap) => {
 };
 
 export const loadFromLocalStorage = (keys: string[]): ssmap => {
-  let data: ssmap = {};
+  const data: ssmap = {};
   keys.forEach((key) => {
     data[key] = window.localStorage.getItem(key);
   });

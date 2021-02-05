@@ -24,7 +24,7 @@ export const saveAuthState = (authState: AuthState): AuthState => {
 
 export const clearAuthState = (): AuthState => {
   clearLocalStorage();
-  return {user: null, token: null};
-}
+  return { user: null, token: null };
+};
 
 export const AuthContext = React.createContext(initialAuthState);
