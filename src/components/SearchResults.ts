@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
+import { useQuery, gql } from '@apollo/client';
 import { Feed, Button, Container, Message, Icon } from 'semantic-ui-react';
 import Link from './Link';
 
@@ -22,8 +20,7 @@ const SEARCH_QUERY = gql`
 
 const LINKS_PER_PAGE = 20;
 
-class SearchResults extends Component {
-  state = {}
+const SearchResults: React.FC = () => {
 
   onCancel = () => {
     this.props.onCancel();
