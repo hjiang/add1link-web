@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Feed, Button, Container, Message, Icon } from 'semantic-ui-react';
-import { LinkRecord } from '../types';
 import Link from './Link';
 
 // TODO: hasMore is probably useless

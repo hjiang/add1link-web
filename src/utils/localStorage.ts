@@ -1,5 +1,5 @@
 type ssmap = { [keys: string]: string | null };
-export const saveToLocalStorage = (kvMap: ssmap) => {
+export const saveToLocalStorage = (kvMap: ssmap): void => {
   Object.entries(kvMap).forEach(([key, value]) => {
     value && window.localStorage.setItem(key, value);
   });
@@ -22,6 +22,6 @@ export const loadUser = () => {
   }
 };
 
-export const clearLocalStorage = () => {
+export const clearLocalStorage = (): void => {
   window.localStorage.clear();
 };

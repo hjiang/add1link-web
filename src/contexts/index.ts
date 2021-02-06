@@ -18,7 +18,11 @@ export const initialAuthState: AuthState = {
 };
 
 export const saveAuthState = (authState: AuthState): AuthState => {
-  saveToLocalStorage({ email: authState.user!.email, token: authState.token });
+  if (authState.user && authState.user.email && authState.token) {
+    saveToLocalStorage({ email: authState.user.email, token: authState.token });
+  } else {
+    console.error(`Invalid auth state: ${authState}`);
+  }
   return authState;
 };
 
