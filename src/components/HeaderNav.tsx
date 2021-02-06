@@ -1,13 +1,15 @@
 import { Menu } from 'semantic-ui-react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../contexts';
 
 interface HeaderNavProps {
   onLogout: () => void;
 }
 
 const HeaderNav: React.FC<HeaderNavProps> = ({ onLogout }) => {
-  const pathMatch = (path) => window.location.pathname === path;
+  const pathMatch = (path: string) => window.location.pathname === path;
+  const auth = useContext(AuthContext);
 
   return (
     <Menu pointing secondary fluid style={{ width: '100%', margin: 0 }}>
@@ -18,10 +20,8 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ onLogout }) => {
         <Link to="/links">Links</Link>
       </Menu.Item>
       <Menu.Menu position="right">
-        {this.props.auth.user && (
-          <Menu.Item>{this.props.auth.user.email}</Menu.Item>
-        )}
-        {this.props.auth.user ? (
+        {auth.user && <Menu.Item>{auth.user.email}</Menu.Item>}
+        {auth.user ? (
           <Menu.Item
             name="logout"
             content="Logout"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { offsetLimitPagination } from '@apollo/client/utilities';
 
 import LinksPage from './LinksPage';
 import NotFoundPage from './NotFoundPage';
@@ -9,7 +10,7 @@ import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
 import HeaderNav from './HeaderNav';
 import LandingPage from './LandingPage';
-import { protect } from './Protected';
+import Protected from './Protected';
 import {
   AuthContext,
   initialAuthState,
@@ -20,9 +21,18 @@ import {
 
 const App: React.FC = () => {
   const [authState, setAuthState] = useState(initialAuthState);
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          search: offsetLimitPagination(['query'])
+        }
+      }
+    }
+  });
   const client = new ApolloClient({
     uri: 'https://48p1r2roz4.sse.codesandbox.io',
-    cache: new InMemoryCache(),
+    cache,
     credentials: 'include',
     headers: {
       authorization: authState.token || ''
@@ -45,7 +55,14 @@ const App: React.FC = () => {
             <Container style={{ width: '100%', margin: 0, minHeight: '20em' }}>
               <Switch>
                 <Route exact path="/" component={LandingPage} />
-                <Route path="/links" component={protect(LinksPage)} />
+                <Route
+                  path="/links"
+                  render={() => (
+                    <Protected>
+                      <LinksPage />
+                    </Protected>
+                  )}
+                />
                 <Route
                   path="/sign-up"
                   render={() => <SignUpPage onSignUp={onSignUp} />}

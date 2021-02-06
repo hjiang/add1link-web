@@ -32,20 +32,13 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   onCancel
 }) => {
   const [sid, setSid] = useState<string | undefined>(undefined);
-  const [linkRecords, setLinkRecords] = useState<LinkRecord[]>([]);
-  const [search, { loading, error }] = useQuery(SEARCH_QUERY, {
+  const { data, loading, error, fetchMore } = useQuery(SEARCH_QUERY, {
+    variables: { query: queryString, limit: LINKS_PER_PAGE },
     onCompleted: (data) => {
-      setLinkRecords([...linkRecords, data.search.links]);
       setSid(data.search.sid);
     }
   });
-  useEffect(() => {
-    search({ variables: { query: queryString, limit: LINKS_PER_PAGE } });
-  }, []);
-  const loadMore = () => {
-    search({ variables: { query: queryString, limit: LINKS_PER_PAGE, sid } });
-  };
-  if (!loading && !error && linkRecords.length === 0) {
+  if (!loading && !error && data.search.links.length === 0) {
     return (
       <Container>
         <div>
@@ -61,7 +54,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         Search query: {queryString} <Icon name="cancel" onClick={onCancel} />
       </div>
       <Feed>
-        {LinkRecords.map((link) => (
+        {data.search.links.map((link: any) => (
           <Link link={link} key={link.id} />
         ))}
       </Feed>
@@ -70,7 +63,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         content={loading ? 'Loading ...' : 'Load more'}
         loading={loading}
         disabled={loading}
-        onClick={loadMore}
+        onClick={() => fetchMore({ variables: { sid } })}
       />
       {error && <Message error content={error} />}
     </Container>

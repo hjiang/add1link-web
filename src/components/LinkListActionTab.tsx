@@ -4,7 +4,8 @@ import { gql, useMutation } from '@apollo/client';
 import { LinkRecord } from '../types';
 
 // Naive way to check URL, but sufficient for our purpose.
-const isWebUrl = (s) => s.startsWith('http://') || s.startsWith('https://');
+const isWebUrl = (s: string): boolean =>
+  s.startsWith('http://') || s.startsWith('https://');
 
 const SAVE_LINK_MUTATION = gql`
   mutation SaveLinkMutation($url: String!, $title: String) {
@@ -17,11 +18,6 @@ const SAVE_LINK_MUTATION = gql`
   }
 `;
 
-LinkListActionTab.propTypes = {
-  afterAddLink: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired
-};
-
 interface LinkListActionTabProps {
   afterAddLink: (link: LinkRecord) => void;
   onSearch: (term: string) => void;
@@ -31,8 +27,8 @@ const LinkListActionTab: React.FC<LinkListActionTabProps> = ({
   afterAddLink,
   onSearch
 }) => {
-  const userInput = useState('');
-  const action = useState('add');
+  const [userInput, setUserInput] = useState('');
+  const [action, setAction] = useState('add');
   const [saveLink, { loading, error }] = useMutation(SAVE_LINK_MUTATION, {
     onCompleted: (data) => {
       setUserInput('');
@@ -40,32 +36,17 @@ const LinkListActionTab: React.FC<LinkListActionTabProps> = ({
     }
   });
 
-  const onInputChange = (e, { value }) => {
-    setUserInput(value);
-    if (isWebUrl(value) && action !== 'add') {
-      setAction('add');
-    } else if (!isWebUrl(value) && action !== 'search') {
-      setAction('search');
-    }
-  };
-
-  handleSubmit = () => {
+  // TODO: turn this input a form and handle submit instead
+  const handleSubmit = () => {
     const input = userInput;
     if (input.length === 0) return;
 
     if (action === 'search') {
-      return onSearch(this.state.userInput);
+      return onSearch(userInput);
     } else {
       saveLink({
         variables: { url: input }
       });
-    }
-  };
-
-  // TODO: turn this input a form and handle submit instead
-  const onKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit();
     }
   };
 
@@ -79,9 +60,20 @@ const LinkListActionTab: React.FC<LinkListActionTabProps> = ({
         type="text"
         loading={loading}
         name="userInput"
-        onChange={onInputChange}
+        onChange={(e, { value }) => {
+          setUserInput(value);
+          if (isWebUrl(value) && action !== 'add') {
+            setAction('add');
+          } else if (!isWebUrl(value) && action !== 'search') {
+            setAction('search');
+          }
+        }}
         value={userInput}
-        onKeyPress={onKeyPress}
+        onKeyPress={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter') {
+            handleSubmit();
+          }
+        }}
         placeholder="URL to add or words to search."
         action
         fluid
@@ -89,7 +81,7 @@ const LinkListActionTab: React.FC<LinkListActionTabProps> = ({
         <Select
           name="action"
           options={options}
-          onChange={(e) => setAction(e.target.value)}
+          onChange={(e, { value }) => setAction(value as string)}
           value={action}
           style={{ width: '6em', minWidth: '6em' }}
         />

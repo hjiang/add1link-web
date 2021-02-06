@@ -1,5 +1,5 @@
 import { Container, Header, Button, Icon } from 'semantic-ui-react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts';
 
@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
       <Link to="/sign-up">
         <Button primary size="huge">
           Get Started
-          <Icon name="right arrow" />
+          <Icon name="arrow right" />
         </Button>
       </Link>
     </Container>

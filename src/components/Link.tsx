@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import 'url-polyfill';
 import { Feed, Icon, Message } from 'semantic-ui-react';
 import { gql, useMutation } from '@apollo/client';
@@ -7,7 +6,6 @@ import { LinkRecord } from '../types';
 
 interface LinkProps {
   link: LinkRecord;
-  isHovering: bool;
 }
 
 const DELETE_LINK_MUTATION = gql`
@@ -16,7 +14,7 @@ const DELETE_LINK_MUTATION = gql`
   }
 `;
 
-const Link: React.FC<LinkProps> = ({ link, isHovering }) => {
+const Link: React.FC<LinkProps> = ({ link }) => {
   const [deleted, setDeleted] = useState(false);
   const [deleteLink, { error }] = useMutation(DELETE_LINK_MUTATION, {
     variables: { id: link.id },
@@ -31,7 +29,7 @@ const Link: React.FC<LinkProps> = ({ link, isHovering }) => {
   const textStyle = deleted
     ? { textDecoration: 'line-through', color: '#898da0' }
     : {};
-  const date = new Date(link.createdAt);
+  const date = link.createdAt ? new Date(link.createdAt) : new Date();
   return (
     <Feed.Event>
       <Feed.Label style={{ width: 'auto', position: 'relative' }}>

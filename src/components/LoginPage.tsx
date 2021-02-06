@@ -29,7 +29,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       history.push('/links');
     }
   });
-  handleSubmit = () => {
+  const handleSubmit = () => {
     login({ variables: { email, password } });
   };
 

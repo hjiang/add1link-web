@@ -29,7 +29,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp }) => {
       history.push('/links');
     }
   });
-  handleSubmit = () => {
+  const handleSubmit = () => {
     signUp({ variables: { email, password } });
   };
 
@@ -42,7 +42,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp }) => {
         <Form.Input
           label="Email"
           name="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e, { value }) => setEmail(value)}
           value={email}
         />
         <Form.Input
@@ -50,7 +50,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp }) => {
           name="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e, { value }) => setPassword(value)}
         />
         {error && <Message error content={error} />}
         <Form.Button primary loading={loading} type="submit">
