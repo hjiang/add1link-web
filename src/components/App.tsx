@@ -31,9 +31,8 @@ const App: React.FC = () => {
     }
   });
   const client = new ApolloClient({
-    uri: 'https://48p1r2roz4.sse.codesandbox.io',
+    uri: 'https://add1.link/graphql/',
     cache,
-    credentials: 'include',
     headers: {
       authorization: authState.token || ''
     }

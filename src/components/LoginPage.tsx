@@ -25,7 +25,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const history = useHistory();
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
-      onLogin(data);
+      onLogin(data.login);
       history.push('/links');
     }
   });
