@@ -34,7 +34,16 @@ const LinkList: React.FC<LinkListsProps> = ({ newLinks }) => {
       setNextTimestamp(data.feed.nextTimestamp);
     }
   });
-  if (!loading && !error && data.feed.length === 0 && newLinks.length === 0) {
+  if (
+    !loading &&
+    !error &&
+    data &&
+    data.feed &&
+    data.feed.links &&
+    data.feed.links.length === 0 &&
+    newLinks &&
+    newLinks.length === 0
+  ) {
     return (
       <Message content="🤔 You don't have any link. Add one above to start! ☝️" />
     );
@@ -46,9 +55,11 @@ const LinkList: React.FC<LinkListsProps> = ({ newLinks }) => {
         {newLinks.map((link) => (
           <Link link={link} key={link.id} />
         ))}
-        {data.feed.links.map((link: any) => (
-          <Link link={link} key={link.id} />
-        ))}
+        {data &&
+          data.feed &&
+          data.feed.links.map((link: any) => (
+            <Link link={link} key={link.id} />
+          ))}
       </Feed>
       <Button
         attached="bottom"

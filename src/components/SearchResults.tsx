@@ -33,11 +33,19 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   const [sid, setSid] = useState<string | undefined>(undefined);
   const { data, loading, error, fetchMore } = useQuery(SEARCH_QUERY, {
     variables: { query: queryString, limit: LINKS_PER_PAGE },
-    onCompleted: (data) => {
+    onCompleted: (data: any) => {
+      console.log(data);
       setSid(data.search.sid);
     }
   });
-  if (!loading && !error && data.search.links.length === 0) {
+  if (
+    !loading &&
+    !error &&
+    data &&
+    data.search &&
+    data.search.links &&
+    data.search.links.length === 0
+  ) {
     return (
       <Container>
         <div>
@@ -53,9 +61,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({
         Search query: {queryString} <Icon name="cancel" onClick={onCancel} />
       </div>
       <Feed>
-        {data.search.links.map((link: any) => (
-          <Link link={link} key={link.id} />
-        ))}
+        {data &&
+          data.search &&
+          data.search.links &&
+          data.search.links.map((link: any) => (
+            <Link link={link} key={link.id} />
+          ))}
       </Feed>
       <Button
         attached="bottom"
