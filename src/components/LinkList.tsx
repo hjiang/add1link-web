@@ -30,6 +30,7 @@ const LinkList: React.FC<LinkListsProps> = ({ newLinks }) => {
   );
   const { data, loading, error, fetchMore } = useQuery(FEED_QUERY, {
     variables: { limit: LINKS_PER_PAGE },
+    fetchPolicy: 'no-cache',
     onCompleted: (data: any) => {
       setNextTimestamp(data.feed.nextTimestamp);
     }

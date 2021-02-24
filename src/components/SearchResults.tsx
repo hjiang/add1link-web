@@ -32,9 +32,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 }) => {
   const [sid, setSid] = useState<string | undefined>(undefined);
   const { data, loading, error, fetchMore } = useQuery(SEARCH_QUERY, {
-    variables: { query: queryString, limit: LINKS_PER_PAGE },
+    variables: {
+      query: queryString,
+      limit: LINKS_PER_PAGE
+    },
+    fetchPolicy: 'no-cache',
     onCompleted: (data: any) => {
-      console.log(data);
       setSid(data.search.sid);
     }
   });

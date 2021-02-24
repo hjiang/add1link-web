@@ -21,15 +21,7 @@ import {
 
 const App: React.FC = () => {
   const [authState, setAuthState] = useState(initialAuthState);
-  const cache = new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          search: offsetLimitPagination(['query'])
-        }
-      }
-    }
-  });
+  const cache = new InMemoryCache();
   const client = new ApolloClient({
     uri: 'https://add1.link/graphql/',
     cache,
