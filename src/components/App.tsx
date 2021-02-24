@@ -21,6 +21,7 @@ import {
 
 const App: React.FC = () => {
   const [authState, setAuthState] = useState(initialAuthState);
+  // TODO: merge paginated data
   const cache = new InMemoryCache();
   const client = new ApolloClient({
     uri: 'https://add1.link/graphql/',

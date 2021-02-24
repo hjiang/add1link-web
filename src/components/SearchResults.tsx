@@ -36,7 +36,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({
       query: queryString,
       limit: LINKS_PER_PAGE
     },
-    fetchPolicy: 'no-cache',
     onCompleted: (data: any) => {
       setSid(data.search.sid);
     }
